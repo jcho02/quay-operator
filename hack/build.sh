@@ -26,7 +26,7 @@ set -e
 export OPERATOR_NAME='quay-operator-test'
 export REGISTRY=${REGISTRY:-'quay.io'}
 export NAMESPACE=${NAMESPACE:-'projectquay'}
-export TAG=${TAG:-'3.9-unstable'}
+export TAG=${TAG:-'3.10-unstable'}
 export CSV_PATH=${CSV_PATH:-'bundle/manifests/quay-operator.clusterserviceversion.yaml'}
 export ANNOTATIONS_PATH=${ANNOTATIONS_PATH:-'bundle/metadata/annotations.yaml'}
 
