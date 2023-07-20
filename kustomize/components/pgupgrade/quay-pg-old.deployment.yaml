@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: quay-database
+  name: quay-database-old
   labels:
     quay-component: postgres
   annotations:
@@ -29,10 +29,10 @@ spec:
             secretName: postgres-bootstrap
         - name: postgres-data
           persistentVolumeClaim:
-            claimName: quay-postgres-13
+            claimName: quay-database
       containers:
         - name: postgres
-          image: quay.io/sclorg/postgresql-13-c9s:latest
+          image: centos/postgresql-10-centos7:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432

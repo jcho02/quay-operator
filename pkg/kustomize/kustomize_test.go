@@ -94,8 +94,8 @@ var kustomizationForTests = []struct {
 			Images: []types.Image{
 				{Name: "quay.io/projectquay/quay", NewName: "quay", Digest: "sha256:abc123"},
 				{Name: "quay.io/projectquay/clair", NewName: "clair", Digest: "sha256:abc123"},
-				{Name: "centos/redis-32-centos7", NewName: "redis", Digest: "sha256:abc123"},
-				{Name: "centos/postgresql-13-centos7", NewName: "postgres", Digest: "sha256:abc123"},
+				{Name: "docker.io/library/redis", NewName: "redis", Digest: "sha256:abc123"},
+				{Name: "quay.io/sclorg/postgresql-13-c9s", NewName: "postgres", Digest: "sha256:abc123"},
 			},
 			SecretGenerator: []types.SecretArgs{},
 		},
@@ -127,8 +127,8 @@ var kustomizationForTests = []struct {
 			Images: []types.Image{
 				{Name: "quay.io/projectquay/quay", NewName: "quay", NewTag: "latest"},
 				{Name: "quay.io/projectquay/clair", NewName: "clair", NewTag: "alpine"},
-				{Name: "centos/redis-32-centos7", NewName: "redis", NewTag: "buster"},
-				{Name: "centos/postgresql-13-centos7", NewName: "postgres", NewTag: "latest"},
+				{Name: "docker.io/library/redis", NewName: "redis", NewTag: "buster"},
+				{Name: "quay.io/sclorg/postgresql-13-c9s", NewName: "postgres", NewTag: "latest"},
 			},
 			SecretGenerator: []types.SecretArgs{},
 		},
@@ -159,8 +159,8 @@ var kustomizationForTests = []struct {
 			Images: []types.Image{
 				{Name: "quay.io/projectquay/quay", NewName: "quay", NewTag: "latest"},
 				{Name: "quay.io/projectquay/clair", NewName: "clair", NewTag: "alpine"},
-				{Name: "centos/redis-32-centos7", NewName: "redis", NewTag: "buster"},
-				{Name: "centos/postgresql-13-centos7", NewName: "postgres", NewTag: "latest"},
+				{Name: "docker.io/library/redis", NewName: "redis", NewTag: "buster"},
+				{Name: "quay.io/sclorg/postgresql-13-c9s", NewName: "postgres", NewTag: "latest"},
 			},
 			SecretGenerator: []types.SecretArgs{},
 		},
@@ -185,7 +185,6 @@ var kustomizationForTests = []struct {
 				APIVersion: types.KustomizationVersion,
 				Kind:       types.KustomizationKind,
 			},
-			Resources: []string{},
 			Components: []string{
 				"../components/clair",
 				"../components/redis",
@@ -195,9 +194,9 @@ var kustomizationForTests = []struct {
 			Images: []types.Image{
 				{Name: "quay.io/projectquay/quay", NewName: "quay", NewTag: "latest"},
 				{Name: "quay.io/projectquay/clair", NewName: "clair", NewTag: "alpine"},
-				{Name: "centos/redis-32-centos7", NewName: "redis", NewTag: "buster"},
-				{Name: "centos/postgresql-13-centos7", NewName: "postgres", NewTag: "latest"},
-				{Name: "centos/postgresql-12-centos7", NewName: "postgres_upgrade", NewTag: "latest"},
+				{Name: "docker.io/library/redis", NewName: "redis", NewTag: "buster"},
+				{Name: "quay.io/sclorg/postgresql-13-c9s", NewName: "postgres", NewTag: "latest"},
+				{Name: "centos/postgresql-10-centos7", NewName: "postgres_previous", NewTag: "latest"},
 			},
 			SecretGenerator: []types.SecretArgs{},
 		},

@@ -13,7 +13,9 @@
 #  * a valid login session to a container registry.
 #  * `docker`
 #  * `yq`
+#  * `jq`
 #  * `opm`
+#  * `skopeo`
 #
 # NOTE: this script will modify the following files:
 #  - bundle/manifests/quay-operator.clusterserviceversion.yaml
@@ -65,11 +67,9 @@ digest "${REGISTRY}/${NAMESPACE}/quay:${TAG}" QUAY_DIGEST
 digest "${REGISTRY}/${NAMESPACE}/clair:nightly" CLAIR_DIGEST
 digest "${REGISTRY}/${NAMESPACE}/quay-builder:${TAG}" BUILDER_DIGEST
 digest "${REGISTRY}/${NAMESPACE}/quay-builder-qemu:3.9.0" BUILDER_QEMU_DIGEST
-digest docker.io/redis:7.0 REDIS_DIGEST
-# shellcheck disable=SC2034
-POSTGRES_DIGEST='quay.io/sclorg/postgresql-13-c9s@sha256:efe7ca31ff169cc8d5f458cc0da4e844b6646a7c1fe76ac4d61a79dcc749f5d1'
-# shellcheck disable=SC2034
-POSTGRES_UPGRADE_DIGEST='centos/postgresql-12-centos7@sha256:be8803d45d64870f8dfd018f3110af62e2e1558d64191faea461005e1bd03243'
+digest quay.io/sclorg/postgresql-13-c9s:latest POSTGRES_DIGEST
+digest centos/postgresql-10-centos7:latest POSTGRES_OLD_DIGEST
+digest docker.io/library/redis:7.0 REDIS_DIGEST
 
 # need exporting so that yq can see them
 export OPERATOR_DIGEST
@@ -78,6 +78,7 @@ export CLAIR_DIGEST
 export BUILDER_DIGEST
 export BUILDER_QEMU_DIGEST
 export POSTGRES_DIGEST
+export POSTGRES_OLD_DIGEST
 export REDIS_DIGEST
 
 
@@ -96,7 +97,7 @@ yq eval -i '
 	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_BUILDER") .value = strenv(BUILDER_DIGEST) |
 	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_BUILDER_QEMU") .value = strenv(BUILDER_QEMU_DIGEST) |
 	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_POSTGRES") .value = strenv(POSTGRES_DIGEST) |
-	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_POSTGRES_UPGRADE") .value = strenv(POSTGRES_UPGRADE_DIGEST) |
+	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_POSTGRES_PREVIOUS") .value = strenv(POSTGRES_OLD_DIGEST) |
 	.spec.install.spec.deployments[0].spec.template.spec.containers[0].env[] |= select(.name == "RELATED_IMAGE_COMPONENT_REDIS") .value = strenv(REDIS_DIGEST)
 	' "${CSV_PATH}"
 
