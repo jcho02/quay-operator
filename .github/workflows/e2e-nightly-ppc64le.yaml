@@ -73,17 +73,3 @@ jobs:
           IBMCLOUD_API_KEY: ${{ secrets.PPC64LE_IBMCLOUD_API_KEY }}
         run: |
           ./hack/ppc64le/destroy_cluster.sh
-
-      - name: Notify slack
-        if: ${{ always() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: team-quay-bots
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_TITLE: "${{ github.workflow }}: ${{ job.status }}"
-          SLACK_MESSAGE: |
-            * **Repo**: ${{ github.repository }}
-            * **Workflow**: ${{ github.workflow }}
-            * **Result**: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            * **Contact**: @yshaikh
