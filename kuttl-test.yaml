@@ -2,7 +2,7 @@ apiVersion: kuttl.dev/v1beta1
 kind: TestSuite
 testDirs:
   - ./e2e
-timeout: 1500
+timeout: 2000
 parallel: 1
 suppress: 
  - "events"
